@@ -1,0 +1,39 @@
+<!-- with (ngSubmit), there is no need to do the e.preventDefault() -->
+<!-- use *ngIf="showTaskForm", if showTaskForm is true/false, this form will be shown/hidden -->
+<form *ngIf="showTaskForm" class="ui form mb-5" (ngSubmit)="onSubmit()">
+    <!-- in React, it's one way data binding, need to use value={text} onChange={e => setText(e.target.value)} -->
+    <!-- but in Angular, it's two ways data binding, [] is for input (value={text}), () is for output (onChange={})-->
+    <!-- so it will be [(ngModel)]="text" to do the data binding, need to be same as name="text" -->
+    <label for="text" class="form-label h3 mt-2">Task</label>
+    <input 
+        class="form-control" 
+        type="text" 
+        id="text" 
+        name="text"
+        [(ngModel)]="text"
+        placeholder = "Enter The task"
+    />
+
+    <label for="day" class="form-label h3 mt-2">Day & Time</label>
+    <input 
+        class="form-control" 
+        type="text" 
+        id="day" 
+        name="day"
+        [(ngModel)]="day"
+        placeholder = "Enter The day & time"
+    />
+
+    <div class="form-check form-switch mt-3">
+        <input 
+            class="form-check-input" 
+            type="checkbox" 
+            id="reminder" 
+            name="reminder"
+            [(ngModel)]="reminder"
+        />
+        <label class="form-check-label fw-bolder" for="reminder">Set Reminder</label>
+    </div>
+
+    <input type="submit" value="Save Task" class="btn btn-info mt-3" />
+</form>

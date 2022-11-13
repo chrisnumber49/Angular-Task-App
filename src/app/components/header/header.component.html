@@ -1,0 +1,21 @@
+<header class="bg-info d-flex justify-content-between align-items-center p-2 mb-3">
+    <h1 class="fw-bolder mx-3">{{title}}</h1>
+    
+    <!-- *ngIf="isRoute('/')", show the button only when the router.url is equal to '/' (home page) -->
+    <!-- color and text are similar to the props in React.js passed to button component 
+        if showTaskForm is ture/false (task-form is shown/hidden), the button will be red/green with Close/Add text -->
+    <!-- (btnClick)="toggleAddTask()" is used when we call the emit, 
+        toggleAddTask() is the method we define what to do when calling the button component  -->
+    <app-button 
+        *ngIf="isRoute('/')"
+        class="mx-3" 
+        color="{{showTaskForm? 'danger': 'success'}}" 
+        text="{{showTaskForm? 'Close': 'Add'}}" 
+        (btnClick)="toggleTaskForm()"
+    >
+    </app-button>
+
+    <!-- (btnClick)="showTaskForm? func1() : func2()" -->
+    <!-- This will call func1 when the condition is true, if it's false then This will call func2. -->
+    
+</header>

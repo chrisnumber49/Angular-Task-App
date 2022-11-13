@@ -1,0 +1,16 @@
+<!-- can use <div [class.bg-light]="!task.reminder" [class.bg-warning]="task.reminder"> as well -->
+<div 
+    [ngClass]="{'bg-light': !task.reminder, 'bg-warning': task.reminder }" 
+    class="d-flex align-items-center justify-content-between border my-2 bg-gradient"
+    (dblclick)="onToggle(task)"
+>
+    <div class="d-flex justify-content-star ps-3 flex-wrap">
+        <div>
+            <!-- Angular Pipe -->
+            <h2>{{task.text | titlecase}}</h2>
+            <h6>{{task.day | titlecase}}</h6>
+        </div>
+    </div>
+
+    <button class="btn btn-danger me-3" (click)="onDelete(task)">x</button>
+</div>

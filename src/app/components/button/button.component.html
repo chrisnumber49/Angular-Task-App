@@ -1,0 +1,8 @@
+<!-- inline styles will be [ngstyle]="{ 'background-color': color}" or [style]="{ 'background-color': color}" same as [ngclass] -->
+<!-- (click) is the event listener in Angular like onClick={onClick} in React -->
+<button 
+    class="btn btn-{{color}}"
+    (click)="onClick()" 
+>
+    {{text}}
+</button> 
