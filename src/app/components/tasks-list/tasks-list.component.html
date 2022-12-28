@@ -1,14 +1,23 @@
 <div class="container-fluid" style="margin-bottom: 150px;">
     <!-- not like task component, task-form doesn't have [task] as Input -->
     <!-- so the argument of the emitted function will be ($event) -->
-    <app-task-form (onAddTask)="addTask($event)"></app-task-form>
+    <app-task-form 
+        (onAddTask)="addTask($event)"
+        (ontoggleTaskSubmit)="toggleTaskSubmit($event)"
+        [id]="selectedTask.id"
+        [text]="selectedTask.text"
+        [day]="selectedTask.day"
+        [reminder]="selectedTask.reminder"
+    >
+
+    </app-task-form>
 
     <!-- data binding in Angular, [] is for input, () is for output -->
     <app-task 
         *ngFor="let task of tasks" 
         [task]="task" 
         (onDeleteTask)="deleteTask(task)"
-        (onToggleReminder)="toggleReminder(task)"
+        (onToggleTask)="toggleTask(task)"
     ></app-task>
 
     <!-- if [task]="task" is changed to task="task", that means task will be assigned to the fixed string "task"-->

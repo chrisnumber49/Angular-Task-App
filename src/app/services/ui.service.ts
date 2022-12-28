@@ -29,4 +29,9 @@ export class UiService {
     // return the Subject as an Observable to let other observers subscribe
     return this.subject.asObservable();
   }
+
+  taskFormShown(): void{
+    this.showTaskForm = true;
+    this.subject.next(this.showTaskForm);
+  }
 }

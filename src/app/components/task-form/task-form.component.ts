@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Task } from 'src/app/TaskInterface';
 import { UiService } from 'src/app/services/ui.service';
 import { Subscription } from 'rxjs';
@@ -9,12 +9,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
-  text!: string;
-  day!: string;
-  reminder: boolean = false;
+  @Input() id?: number;
+  @Input() text!: string;
+  @Input() day!: string;
+  @Input() reminder!: boolean;
 
   // emit to the task-list component to let task.service handle the post request
   @Output() onAddTask: EventEmitter<Task> = new EventEmitter();
+  @Output() ontoggleTaskSubmit: EventEmitter<Task> = new EventEmitter();
 
   // at the beginning the default value of boolean in TypeScript is false
   showTaskForm!: boolean;
@@ -35,18 +37,29 @@ export class TaskFormComponent implements OnInit {
       return;
     }
 
-    // form dada
-    const newTask = {
-      text: this.text,
-      day: this.day,
-      reminder: this.reminder
+    if(!this.id){
+      // form dada
+      const formTask = {
+        text: this.text,
+        day: this.day,
+        reminder: this.reminder
+      }
+      // emit to the task-list component to let task.service handle the post request
+      this.onAddTask.emit(formTask);
+
+      this.text ='';
+      this.day = '';
+      this.reminder = false;
     }
-
-    // emit to the task-list component to let task.service handle the post request
-    this.onAddTask.emit(newTask);
-
-    this.text = '';
-    this.day = '';
-    this.reminder = false;
+    if(this.id){
+      const formTask = {
+        id: this.id,
+        text: this.text,
+        day: this.day,
+        reminder: this.reminder
+      }
+      this.ontoggleTaskSubmit.emit(formTask)
+    }
+    
   }
 }

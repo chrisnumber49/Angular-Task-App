@@ -1,3 +1,4 @@
+import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/TaskInterface';
 import { TasksService } from 'src/app/services/tasks.service';
@@ -9,9 +10,10 @@ import { TasksService } from 'src/app/services/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
+  selectedTask: Task = {text:'', day:'', reminder: false};
 
   // create an instance "tasksService" to provide constructor which has the type of "TasksService" imported from tasks.service
-  constructor(private tasksService: TasksService) { }
+  constructor(private tasksService: TasksService, private uiService: UiService) { }
 
   // like componentDidMount() or useEffect() in React.js
   ngOnInit(): void {
@@ -36,9 +38,23 @@ export class TasksListComponent implements OnInit {
   }
 
   // toggle the reminder and update the task with the corresponding id on the backend (with the updated task on frontend)
-  toggleReminder(task: Task) {
-    task.reminder = !task.reminder;
-    this.tasksService.updateTaskReminder(task).subscribe();
+  toggleTask(task: Task) {
+    this.selectedTask = {...task};
+    this.uiService.taskFormShown();
+  }
+
+  toggleTaskSubmit(task: Task) {
+    this.tasksService.updateTask(task).subscribe((task) => {
+      this.tasks = this.tasks.map((t) => {
+        if(t.id === task.id) {
+          return task;
+        }
+        else {
+          return t;
+        }
+      })
+    });
+    this.selectedTask = {text:'', day:'', reminder: false};
   }
 
   // add a new task with on the frontend after the backend has finished in tasksService
